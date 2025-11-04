@@ -30,18 +30,30 @@ const Login = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center fade-in-up"
       style={{ minHeight: "60vh" }}
     >
       <Card
-        className="shadow-sm border-0"
+        className="shadow-soft border-0"
         style={{ maxWidth: "420px", width: "100%" }}
       >
-        <Card.Body className="p-4">
-          <h2 className="h4 fw-semibold mb-3 text-primary">Login Petugas</h2>
-          <p className="text-muted mb-4">
-            Aktifkan sesi shift untuk mencatat kunjungan dan transaksi.
-          </p>
+        <Card.Body className="p-5">
+          <div className="text-center mb-4">
+            <img
+              src="/logo.png"
+              alt="FisioMed Logo"
+              style={{ height: "80px", width: "auto", marginBottom: "1rem" }}
+            />
+            <h2 className="h4 fw-semibold mb-2" style={{
+              background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>Login Petugas</h2>
+            <p className="text-muted mb-0">
+              Aktifkan sesi shift untuk mencatat kunjungan dan transaksi.
+            </p>
+          </div>
           <Form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
             <Form.Group controlId="loginName">
               <Form.Label>Nama Petugas</Form.Label>

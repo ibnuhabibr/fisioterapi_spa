@@ -38,12 +38,20 @@ const Laporan = () => {
       (sum, transaction) => sum + transaction.amount,
       0
     );
+
+    // Hitung pendapatan yang sudah dibayar (Lunas atau DP)
     const paidRevenue = monthlyTransactions
-      .filter((transaction) => transaction.status === "Lunas")
+      .filter((transaction) =>
+        ["lunas", "dp"].includes(transaction.status.toLowerCase())
+      )
       .reduce((sum, transaction) => sum + transaction.amount, 0);
 
+    // Hitung pendapatan yang belum dibayar
     const outstandingRevenue = monthlyTransactions
-      .filter((transaction) => transaction.status !== "Lunas")
+      .filter(
+        (transaction) =>
+          !["lunas", "dp"].includes(transaction.status.toLowerCase())
+      )
       .reduce((sum, transaction) => sum + transaction.amount, 0);
 
     const visitByStatus = visits.reduce(
@@ -108,9 +116,22 @@ const Laporan = () => {
   );
 
   return (
-    <div className="d-flex flex-column gap-4">
+    <div className="d-flex flex-column gap-4 fade-in-up">
       <div>
-        <h2 className="h3 fw-semibold mb-1 text-primary">Laporan Klinik</h2>
+        <div className="d-flex align-items-center gap-2 mb-2">
+          <span style={{ fontSize: "2rem" }}>📈</span>
+          <h2
+            className="h3 fw-semibold mb-0"
+            style={{
+              background: "linear-gradient(135deg, #dc3545 0%, #b02a37 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Laporan Klinik
+          </h2>
+        </div>
         <p className="text-muted mb-0">
           Rekap performa finansial dan operasional klinik fisioterapi &amp; baby
           spa secara real time.
@@ -119,42 +140,95 @@ const Laporan = () => {
 
       <Row className="g-4">
         <Col xl={4} md={6}>
-          <Card className="shadow-sm border-0">
+          <Card className="shadow-soft border-0 h-100">
             <Card.Body>
-              <p className="text-muted mb-1">Total Revenue Bulan Ini</p>
-              <h3 className="fw-bold mb-1">
+              <div className="d-flex justify-content-between align-items-start mb-3">
+                <div className="bg-success bg-opacity-10 p-3 rounded-3">
+                  <span style={{ fontSize: "1.8rem" }}>💰</span>
+                </div>
+              </div>
+              <p
+                className="text-muted mb-1 text-uppercase"
+                style={{
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.5px",
+                  fontWeight: "600",
+                }}
+              >
+                Total Revenue Bulan Ini
+              </p>
+              <h3
+                className="fw-bold mb-2"
+                style={{ fontSize: "2rem", color: "#198754" }}
+              >
                 {formatCurrency(metrics.totalRevenue)}
               </h3>
               <small className="text-success fw-medium">
-                {formatCurrency(metrics.paidRevenue)} telah dibayar
+                💵 {formatCurrency(metrics.paidRevenue)} telah dibayar
               </small>
             </Card.Body>
           </Card>
         </Col>
         <Col xl={4} md={6}>
-          <Card className="shadow-sm border-0">
+          <Card className="shadow-soft border-0 h-100">
             <Card.Body>
-              <p className="text-muted mb-1">Tagihan Menunggu Pembayaran</p>
-              <h3 className="fw-bold mb-1">
+              <div className="d-flex justify-content-between align-items-start mb-3">
+                <div className="bg-warning bg-opacity-10 p-3 rounded-3">
+                  <span style={{ fontSize: "1.8rem" }}>⏳</span>
+                </div>
+              </div>
+              <p
+                className="text-muted mb-1 text-uppercase"
+                style={{
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.5px",
+                  fontWeight: "600",
+                }}
+              >
+                Tagihan Menunggu
+              </p>
+              <h3
+                className="fw-bold mb-2"
+                style={{ fontSize: "2rem", color: "#ffc107" }}
+              >
                 {formatCurrency(metrics.outstandingRevenue)}
               </h3>
               <small className="text-muted">
-                {metrics.monthlyTransactions.length} transaksi tercatat
+                📋 {metrics.monthlyTransactions.length} transaksi tercatat
               </small>
             </Card.Body>
           </Card>
         </Col>
         <Col xl={4} md={12}>
-          <Card className="shadow-sm border-0">
+          <Card className="shadow-soft border-0 h-100">
             <Card.Body>
-              <p className="text-muted mb-1">Rata-rata Progress Program</p>
-              <h3 className="fw-bold mb-2">{metrics.avgProgress}%</h3>
+              <div className="d-flex justify-content-between align-items-start mb-3">
+                <div className="bg-info bg-opacity-10 p-3 rounded-3">
+                  <span style={{ fontSize: "1.8rem" }}>📊</span>
+                </div>
+              </div>
+              <p
+                className="text-muted mb-1 text-uppercase"
+                style={{
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.5px",
+                  fontWeight: "600",
+                }}
+              >
+                Rata-rata Progress
+              </p>
+              <h3
+                className="fw-bold mb-3"
+                style={{ fontSize: "2rem", color: "#0dcaf0" }}
+              >
+                {metrics.avgProgress}%
+              </h3>
               <ProgressBar
                 now={metrics.avgProgress}
-                style={{ height: "8px" }}
+                style={{ height: "10px", borderRadius: "8px" }}
               />
-              <small className="text-muted">
-                Progress rata-rata seluruh kunjungan terdaftar
+              <small className="text-muted mt-2 d-block">
+                Progress seluruh kunjungan terdaftar
               </small>
             </Card.Body>
           </Card>
@@ -163,15 +237,29 @@ const Laporan = () => {
 
       <Row className="g-4">
         <Col xl={8}>
-          <Card className="shadow-sm border-0">
-            <Card.Header className="bg-white d-flex justify-content-between align-items-center">
-              <div>
-                <Card.Title className="h5 mb-0">Kinerja Layanan</Card.Title>
-                <Card.Subtitle className="text-muted">
-                  Performa masing-masing layanan terhadap pendapatan.
-                </Card.Subtitle>
+          <Card className="shadow-soft border-0">
+            <Card.Header
+              style={{
+                background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
+              }}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <div className="d-flex align-items-center gap-2">
+                    <span style={{ fontSize: "1.3rem" }}>🎯</span>
+                    <Card.Title className="h5 mb-0">Kinerja Layanan</Card.Title>
+                  </div>
+                  <Card.Subtitle
+                    className="text-muted mt-1"
+                    style={{ fontSize: "0.85rem" }}
+                  >
+                    Performa masing-masing layanan terhadap pendapatan.
+                  </Card.Subtitle>
+                </div>
+                <Badge bg="primary" style={{ fontSize: "0.9rem" }}>
+                  {services.length} layanan
+                </Badge>
               </div>
-              <Badge bg="primary">{services.length} layanan</Badge>
             </Card.Header>
             <Card.Body className="p-0">
               <Table responsive hover className="mb-0 align-middle">

@@ -29,14 +29,18 @@ const Layout = () => {
             className="fw-bold d-flex align-items-center gap-2"
             style={{ fontSize: "1.5rem", letterSpacing: "-0.5px" }}
           >
-            <span
+            <img
+              src="/logo.png"
+              alt="FisioMed Logo"
               style={{
-                fontSize: "1.8rem",
+                height: "40px",
+                width: "auto",
                 filter: "drop-shadow(0 2px 4px rgba(13, 110, 253, 0.3))",
+                transition: "transform 0.2s ease"
               }}
-            >
-              🏥
-            </span>
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            />
             <span>
               <span
                 style={{
@@ -238,20 +242,35 @@ const Layout = () => {
         style={{ boxShadow: "0 -2px 10px rgba(0,0,0,0.05)" }}
       >
         <Container fluid className="px-4">
-          <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
-            <div className="d-flex align-items-center gap-2">
-              <span style={{ fontSize: "1.2rem" }}>🏥</span>
-              <small className="text-muted">
-                &copy; {currentYear} <strong>FisioMed</strong> Klinik
-                Fisioterapi &amp; Baby Spa. All rights reserved.
+          <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div className="d-flex align-items-center gap-3">
+              <img
+                src="/logo.png"
+                alt="FisioMed Logo"
+                style={{ height: "32px", width: "auto", opacity: 0.9 }}
+              />
+              <div className="d-flex flex-column">
+                <small className="text-muted mb-1">
+                  &copy; {currentYear} <strong className="text-primary">FisioMed</strong> - Klinik Fisioterapi &amp; Baby Spa
+                </small>
+                <small className="text-muted" style={{ fontSize: '0.75rem' }}>
+                  Jl. Anggrek Neli Murni No. 15, Kemanggisan, Jakarta Barat
+                </small>
+              </div>
+            </div>
+            <div className="d-flex flex-column align-items-md-end gap-1">
+              <div className="d-flex align-items-center gap-2">
+                <Badge bg="primary" className="px-2 py-1">
+                  v1.0.0
+                </Badge>
+                <Badge bg="success" className="px-2 py-1">
+                  Production Ready
+                </Badge>
+              </div>
+              <small className="text-muted" style={{ fontSize: '0.75rem' }}>
+                Sistem Rekam Medis Klinik
               </small>
             </div>
-            <small className="text-muted">
-              <Badge bg="secondary" className="me-2">
-                v1.0.0
-              </Badge>
-              Sistem Rekam Medis
-            </small>
           </div>
         </Container>
       </footer>
