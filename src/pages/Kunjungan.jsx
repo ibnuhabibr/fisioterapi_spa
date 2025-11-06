@@ -20,12 +20,23 @@ const initialVisitForm = {
   scheduledAt: "",
   status: "Terjadwal",
   paymentStatus: "Belum Bayar",
+  paymentMethod: "Transfer BCA", // 🆕 Default payment method untuk auto-transaction
   notes: "",
   progress: 0,
 };
 
 const statusOptions = ["Terjadwal", "Proses", "Selesai", "Batal"];
 const paymentOptions = ["Belum Bayar", "DP 50%", "Lunas"];
+const paymentMethodOptions = [
+  "Transfer BCA",
+  "Transfer Mandiri",
+  "Cash",
+  "Debit Card",
+  "QRIS",
+  "OVO",
+  "GoPay",
+  "ShopeePay",
+]; // 🆕 Method pembayaran
 
 const formatDateTime = (value) =>
   value
@@ -115,6 +126,7 @@ const Kunjungan = () => {
       scheduledAt: visit.scheduledAt?.slice(0, 16) ?? "",
       status: visit.status,
       paymentStatus: visit.paymentStatus,
+      paymentMethod: visit.paymentMethod ?? "Transfer BCA", // 🆕 Load payment method
       notes: visit.notes ?? "",
       progress: visit.progress ?? 0,
     });
@@ -295,8 +307,38 @@ const Kunjungan = () => {
                           </option>
                         ))}
                       </Form.Select>
+                      <Form.Text className="text-muted">
+                        💡 <strong>Otomatis:</strong> Jika pilih DP/Lunas,
+                        transaksi akan dibuat otomatis.
+                      </Form.Text>
                     </Form.Group>
                   </Col>
+                  {/* 🆕 PAYMENT METHOD - Muncul jika ada pembayaran */}
+                  {formData.paymentStatus !== "Belum Bayar" && (
+                    <Col md={6}>
+                      <Form.Group controlId="visitPaymentMethod">
+                        <Form.Label>
+                          <span className="text-danger">*</span> Metode
+                          Pembayaran
+                        </Form.Label>
+                        <Form.Select
+                          name="paymentMethod"
+                          value={formData.paymentMethod}
+                          onChange={handleChange}
+                          required
+                        >
+                          {paymentMethodOptions.map((method) => (
+                            <option key={method} value={method}>
+                              {method}
+                            </option>
+                          ))}
+                        </Form.Select>
+                        <Form.Text className="text-info">
+                          🏦 Pilih metode pembayaran yang digunakan pasien.
+                        </Form.Text>
+                      </Form.Group>
+                    </Col>
+                  )}
                 </Row>
                 <Form.Group controlId="visitProgress">
                   <Form.Label>Progress Program (%)</Form.Label>
@@ -599,8 +641,30 @@ const Kunjungan = () => {
                       </option>
                     ))}
                   </Form.Select>
+                  <Form.Text className="text-muted">
+                    ⚠️ Edit manual, transaksi otomatis tidak dibuat ulang.
+                  </Form.Text>
                 </Form.Group>
               </Col>
+              {/* 🆕 PAYMENT METHOD di Modal Edit */}
+              {formData.paymentStatus !== "Belum Bayar" && (
+                <Col md={3}>
+                  <Form.Group controlId="editVisitPaymentMethod">
+                    <Form.Label>Metode</Form.Label>
+                    <Form.Select
+                      name="paymentMethod"
+                      value={formData.paymentMethod}
+                      onChange={handleChange}
+                    >
+                      {paymentMethodOptions.map((method) => (
+                        <option key={method} value={method}>
+                          {method}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              )}
             </Row>
             <Form.Group controlId="editVisitProgress">
               <Form.Label>Progress Program (%)</Form.Label>

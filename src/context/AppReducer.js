@@ -102,7 +102,44 @@ export const appReducer = (state, action) => {
       };
 
     case actionTypes.ADD_VISIT:
-      return { ...state, visits: [action.payload, ...state.visits] };
+      // 🎯 AUTO-CREATE TRANSACTION: Jika ada pembayaran (DP/Lunas), buat transaksi otomatis
+      const newVisit = action.payload;
+      let autoTransaction = null;
+
+      // Jika payment status bukan "Belum Bayar", buat transaksi otomatis
+      if (newVisit.paymentStatus !== "Belum Bayar" && newVisit.paymentMethod) {
+        const transactionAmount =
+          newVisit.paymentStatus === "DP 50%"
+            ? Math.round(newVisit.total * 0.5)
+            : newVisit.total;
+
+        const transactionStatus =
+          newVisit.paymentStatus === "Lunas" ? "Lunas" : "DP";
+
+        autoTransaction = {
+          id: `TRX-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          reference: `INV-${new Date().getFullYear()}-${Math.floor(
+            Math.random() * 900 + 100
+          )}`,
+          visitId: newVisit.id,
+          patientId: newVisit.patientId,
+          amount: transactionAmount,
+          method: newVisit.paymentMethod,
+          status: transactionStatus,
+          notes: `Pembayaran otomatis saat pendaftaran kunjungan (${newVisit.paymentStatus})`,
+          issuedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+        };
+      }
+
+      return {
+        ...state,
+        visits: [action.payload, ...state.visits],
+        // Tambahkan transaksi otomatis jika ada pembayaran
+        transactions: autoTransaction
+          ? [autoTransaction, ...state.transactions]
+          : state.transactions,
+      };
     case actionTypes.UPDATE_VISIT:
       return {
         ...state,

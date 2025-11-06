@@ -33,13 +33,16 @@ const Pengaturan = () => {
       <div className="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
         <div>
           <div className="d-flex align-items-center gap-2 mb-2">
-            <span style={{ fontSize: '2rem' }}>⚙️</span>
-            <h2 className="h3 fw-semibold mb-0" style={{
-              background: 'linear-gradient(135deg, #6c757d 0%, #495057 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
+            <span style={{ fontSize: "2rem" }}>⚙️</span>
+            <h2
+              className="h3 fw-semibold mb-0"
+              style={{
+                background: "linear-gradient(135deg, #6c757d 0%, #495057 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               Pengaturan Sistem
             </h2>
           </div>
@@ -54,7 +57,7 @@ const Pengaturan = () => {
           onClick={handleReset}
           className="d-flex align-items-center gap-2"
           style={{
-            boxShadow: '0 4px 12px rgba(220, 53, 69, 0.3)'
+            boxShadow: "0 4px 12px rgba(220, 53, 69, 0.3)",
           }}
         >
           🔄 Reset ke Data Awal
@@ -172,21 +175,24 @@ const Pengaturan = () => {
         <Card.Body className="p-4">
           <div className="d-flex align-items-start gap-3">
             <div className="bg-info bg-opacity-10 p-3 rounded-3">
-              <span style={{ fontSize: '2rem' }}>ℹ️</span>
+              <span style={{ fontSize: "2rem" }}>ℹ️</span>
             </div>
             <div className="flex-grow-1">
               <h5 className="fw-semibold mb-2">Tentang Reset Data</h5>
               <p className="text-muted mb-3">
-                Fitur <strong>"Reset ke Data Awal"</strong> akan mengembalikan semua data sistem
-                ke kondisi awal (seed data) yang berisi contoh data pasien, pegawai, layanan,
-                kunjungan, dan transaksi.
+                Fitur <strong>"Reset ke Data Awal"</strong> akan mengembalikan
+                semua data sistem ke kondisi awal (seed data) yang berisi contoh
+                data pasien, pegawai, layanan, kunjungan, dan transaksi.
               </p>
               <div className="alert alert-warning mb-3">
-                <strong>⚠️ Peringatan:</strong> Semua data yang telah Anda tambahkan atau ubah
-                akan <strong>dihapus permanen</strong> dan tidak dapat dikembalikan.
+                <strong>⚠️ Peringatan:</strong> Semua data yang telah Anda
+                tambahkan atau ubah akan <strong>dihapus permanen</strong> dan
+                tidak dapat dikembalikan.
               </div>
               <div className="bg-light p-3 rounded">
-                <p className="mb-2"><strong>Data yang akan direset:</strong></p>
+                <p className="mb-2">
+                  <strong>Data yang akan direset:</strong>
+                </p>
                 <ul className="mb-2">
                   <li>✓ 4 Pasien contoh</li>
                   <li>✓ 4 Pegawai/Terapis</li>
@@ -197,8 +203,9 @@ const Pengaturan = () => {
                   <li>✓ Notifikasi sistem</li>
                 </ul>
                 <p className="text-muted mb-0 small">
-                  <strong>💡 Tip:</strong> Gunakan fitur ini jika data production Anda sudah tidak sinkron
-                  dengan data development, atau jika Anda ingin memulai dari awal dengan data bersih.
+                  <strong>💡 Tip:</strong> Gunakan fitur ini jika data
+                  production Anda sudah tidak sinkron dengan data development,
+                  atau jika Anda ingin memulai dari awal dengan data bersih.
                 </p>
               </div>
             </div>
