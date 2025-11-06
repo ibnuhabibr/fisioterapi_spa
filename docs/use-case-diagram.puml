@@ -10,7 +10,7 @@ actor "Pasien" as Patient <<external>>
 actor "System" as System <<automated>>
 
 package "Sistem Rekam Medis FisioMed" {
-  
+
   rectangle "Authentication & Authorization" {
     usecase UC01 as "UC-01: Login / Shift Management
     --
@@ -19,7 +19,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Update informasi user aktif"
   }
-  
+
   rectangle "Dashboard & Monitoring" {
     usecase UC03 as "UC-03: Lihat Dashboard
     --
@@ -28,7 +28,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Lihat notifikasi sistem"
   }
-  
+
   rectangle "Master Data Management" {
     usecase UC05 as "UC-05: Kelola Pasien (CRUD)
     --
@@ -40,7 +40,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Tambah, edit, hapus katalog layanan"
   }
-  
+
   rectangle "Visit Management" {
     usecase UC08 as "UC-08: Jadwalkan Kunjungan
     --
@@ -55,7 +55,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Tampilkan info lengkap visit & transaksi"
   }
-  
+
   rectangle "Transaction & Payment" {
     usecase UC12 as "UC-12: Catat Transaksi
     --
@@ -70,7 +70,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Sinkronkan status pembayaran visit"
   }
-  
+
   rectangle "Reporting & Analytics" {
     usecase UC16 as "UC-16: Lihat Laporan Keuangan
     --
@@ -82,7 +82,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Download data laporan"
   }
-  
+
   rectangle "Settings & Configuration" {
     usecase UC19 as "UC-19: Update Pengaturan Klinik
     --
@@ -91,7 +91,7 @@ package "Sistem Rekam Medis FisioMed" {
     --
     Reset database ke mock data"
   }
-  
+
   rectangle "Automated Processes" {
     usecase UC21 as "UC-21: Kirim Reminder WhatsApp
     --

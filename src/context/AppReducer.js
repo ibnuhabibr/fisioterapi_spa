@@ -117,18 +117,26 @@ export const appReducer = (state, action) => {
     case actionTypes.ADD_TRANSACTION:
       // Auto-sync: Update visit paymentStatus berdasarkan transaction status
       const newTransaction = action.payload;
-      const visitToUpdate = state.visits.find(v => v.id === newTransaction.visitId);
+      const visitToUpdate = state.visits.find(
+        (v) => v.id === newTransaction.visitId
+      );
 
       let updatedVisits = state.visits;
       if (visitToUpdate) {
         const newPaymentStatus =
-          newTransaction.status.toLowerCase() === "lunas" ? "Lunas" :
-          newTransaction.status.toLowerCase() === "dp" ? "DP 50%" :
-          "Belum Bayar";
+          newTransaction.status.toLowerCase() === "lunas"
+            ? "Lunas"
+            : newTransaction.status.toLowerCase() === "dp"
+            ? "DP 50%"
+            : "Belum Bayar";
 
-        updatedVisits = state.visits.map(visit =>
+        updatedVisits = state.visits.map((visit) =>
           visit.id === newTransaction.visitId
-            ? { ...visit, paymentStatus: newPaymentStatus, updatedAt: new Date().toISOString() }
+            ? {
+                ...visit,
+                paymentStatus: newPaymentStatus,
+                updatedAt: new Date().toISOString(),
+              }
             : visit
         );
       }
@@ -142,18 +150,26 @@ export const appReducer = (state, action) => {
     case actionTypes.UPDATE_TRANSACTION:
       // Auto-sync: Update visit paymentStatus saat transaction diupdate
       const updatedTransaction = action.payload;
-      const visitToSync = state.visits.find(v => v.id === updatedTransaction.visitId);
+      const visitToSync = state.visits.find(
+        (v) => v.id === updatedTransaction.visitId
+      );
 
       let syncedVisits = state.visits;
       if (visitToSync) {
         const syncedPaymentStatus =
-          updatedTransaction.status.toLowerCase() === "lunas" ? "Lunas" :
-          updatedTransaction.status.toLowerCase() === "dp" ? "DP 50%" :
-          "Belum Bayar";
+          updatedTransaction.status.toLowerCase() === "lunas"
+            ? "Lunas"
+            : updatedTransaction.status.toLowerCase() === "dp"
+            ? "DP 50%"
+            : "Belum Bayar";
 
-        syncedVisits = state.visits.map(visit =>
+        syncedVisits = state.visits.map((visit) =>
           visit.id === updatedTransaction.visitId
-            ? { ...visit, paymentStatus: syncedPaymentStatus, updatedAt: new Date().toISOString() }
+            ? {
+                ...visit,
+                paymentStatus: syncedPaymentStatus,
+                updatedAt: new Date().toISOString(),
+              }
             : visit
         );
       }
@@ -166,13 +182,19 @@ export const appReducer = (state, action) => {
 
     case actionTypes.DELETE_TRANSACTION:
       // Auto-sync: Reset visit paymentStatus ke "Belum Bayar" jika transaksi dihapus
-      const deletedTransaction = state.transactions.find(t => t.id === action.payload);
+      const deletedTransaction = state.transactions.find(
+        (t) => t.id === action.payload
+      );
       let resetVisits = state.visits;
 
       if (deletedTransaction) {
-        resetVisits = state.visits.map(visit =>
+        resetVisits = state.visits.map((visit) =>
           visit.id === deletedTransaction.visitId
-            ? { ...visit, paymentStatus: "Belum Bayar", updatedAt: new Date().toISOString() }
+            ? {
+                ...visit,
+                paymentStatus: "Belum Bayar",
+                updatedAt: new Date().toISOString(),
+              }
             : visit
         );
       }

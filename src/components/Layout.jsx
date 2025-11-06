@@ -36,10 +36,14 @@ const Layout = () => {
                 height: "40px",
                 width: "auto",
                 filter: "drop-shadow(0 2px 4px rgba(13, 110, 253, 0.3))",
-                transition: "transform 0.2s ease"
+                transition: "transform 0.2s ease",
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
             />
             <span>
               <span
@@ -251,9 +255,11 @@ const Layout = () => {
               />
               <div className="d-flex flex-column">
                 <small className="text-muted mb-1">
-                  &copy; {currentYear} <strong className="text-primary">FisioMed</strong> - Klinik Fisioterapi &amp; Baby Spa
+                  &copy; {currentYear}{" "}
+                  <strong className="text-primary">FisioMed</strong> - Klinik
+                  Fisioterapi &amp; Baby Spa
                 </small>
-                <small className="text-muted" style={{ fontSize: '0.75rem' }}>
+                <small className="text-muted" style={{ fontSize: "0.75rem" }}>
                   Jl. Anggrek Neli Murni No. 15, Kemanggisan, Jakarta Barat
                 </small>
               </div>
@@ -267,7 +273,7 @@ const Layout = () => {
                   Production Ready
                 </Badge>
               </div>
-              <small className="text-muted" style={{ fontSize: '0.75rem' }}>
+              <small className="text-muted" style={{ fontSize: "0.75rem" }}>
                 Sistem Rekam Medis Klinik
               </small>
             </div>

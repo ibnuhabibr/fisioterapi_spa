@@ -152,10 +152,10 @@ const visits = [
     status: "Terjadwal",
     notes: "Fokus pada keseimbangan kepala.",
     total: 250000,
-    paymentStatus: "Belum Bayar",
+    paymentStatus: "Lunas", // ✅ FIXED: Sync with TRX-003
     progress: 40,
     createdAt: "2025-10-21T10:30:00+07:00",
-    updatedAt: "2025-10-21T10:30:00+07:00",
+    updatedAt: "2025-11-02T09:15:00+07:00", // Updated when TRX-003 created
   },
   {
     id: "VIS-002",
@@ -194,10 +194,10 @@ const visits = [
     status: "Terjadwal",
     notes: "Monitor range of motion lutut kiri.",
     total: 320000,
-    paymentStatus: "Belum Bayar",
+    paymentStatus: "DP 50%", // ✅ FIXED: Sync with TRX-004
     progress: 20,
     createdAt: "2025-10-25T14:10:00+07:00",
-    updatedAt: "2025-10-25T14:10:00+07:00",
+    updatedAt: "2025-11-03T14:25:00+07:00", // Updated when TRX-004 created
   },
 ];
 

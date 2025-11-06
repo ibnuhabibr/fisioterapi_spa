@@ -44,12 +44,17 @@ const Login = () => {
               alt="FisioMed Logo"
               style={{ height: "80px", width: "auto", marginBottom: "1rem" }}
             />
-            <h2 className="h4 fw-semibold mb-2" style={{
-              background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>Login Petugas</h2>
+            <h2
+              className="h4 fw-semibold mb-2"
+              style={{
+                background: "linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Login Petugas
+            </h2>
             <p className="text-muted mb-0">
               Aktifkan sesi shift untuk mencatat kunjungan dan transaksi.
             </p>
