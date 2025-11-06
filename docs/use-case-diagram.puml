@@ -1,0 +1,175 @@
+@startuml FisioMed Use Case Diagram
+left to right direction
+skinparam dpi 150
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+
+actor "Front Office / Admin" as Admin <<primary>>
+actor "Terapis" as Therapist <<secondary>>
+actor "Pasien" as Patient <<external>>
+actor "System" as System <<automated>>
+
+package "Sistem Rekam Medis FisioMed" {
+  
+  rectangle "Authentication & Authorization" {
+    usecase UC01 as "UC-01: Login / Shift Management
+    --
+    Petugas login untuk memulai shift kerja"
+    usecase UC02 as "UC-02: Manage Active User
+    --
+    Update informasi user aktif"
+  }
+  
+  rectangle "Dashboard & Monitoring" {
+    usecase UC03 as "UC-03: Lihat Dashboard
+    --
+    Tampilkan metrik real-time klinik"
+    usecase UC04 as "UC-04: View Notifications
+    --
+    Lihat notifikasi sistem"
+  }
+  
+  rectangle "Master Data Management" {
+    usecase UC05 as "UC-05: Kelola Pasien (CRUD)
+    --
+    Tambah, edit, hapus data pasien"
+    usecase UC06 as "UC-06: Kelola Pegawai (CRUD)
+    --
+    Tambah, edit, hapus data pegawai"
+    usecase UC07 as "UC-07: Kelola Layanan (CRUD)
+    --
+    Tambah, edit, hapus katalog layanan"
+  }
+  
+  rectangle "Visit Management" {
+    usecase UC08 as "UC-08: Jadwalkan Kunjungan
+    --
+    Buat appointment baru untuk pasien"
+    usecase UC09 as "UC-09: Update Status Kunjungan
+    --
+    Update status: Terjadwal/Proses/Selesai"
+    usecase UC10 as "UC-10: Update Progress Terapi
+    --
+    Catat progress terapi pasien"
+    usecase UC11 as "UC-11: Lihat Detail Kunjungan
+    --
+    Tampilkan info lengkap visit & transaksi"
+  }
+  
+  rectangle "Transaction & Payment" {
+    usecase UC12 as "UC-12: Catat Transaksi
+    --
+    Buat transaksi pembayaran (DP/Lunas)"
+    usecase UC13 as "UC-13: Update Transaksi
+    --
+    Edit data transaksi"
+    usecase UC14 as "UC-14: Hapus Transaksi
+    --
+    Batalkan/hapus transaksi"
+    usecase UC15 as "UC-15: Auto-Sync Payment Status
+    --
+    Sinkronkan status pembayaran visit"
+  }
+  
+  rectangle "Reporting & Analytics" {
+    usecase UC16 as "UC-16: Lihat Laporan Keuangan
+    --
+    Rekap pendapatan & transaksi"
+    usecase UC17 as "UC-17: Analisis Kinerja Layanan
+    --
+    Performa tiap layanan"
+    usecase UC18 as "UC-18: Export Laporan
+    --
+    Download data laporan"
+  }
+  
+  rectangle "Settings & Configuration" {
+    usecase UC19 as "UC-19: Update Pengaturan Klinik
+    --
+    Ubah informasi & konfigurasi"
+    usecase UC20 as "UC-20: Reset Data ke Seed
+    --
+    Reset database ke mock data"
+  }
+  
+  rectangle "Automated Processes" {
+    usecase UC21 as "UC-21: Kirim Reminder WhatsApp
+    --
+    Notifikasi otomatis ke pasien"
+    usecase UC22 as "UC-22: Generate Daily Summary
+    --
+    Ringkasan harian otomatis"
+  }
+}
+
+' Primary Actor Relations - Admin
+Admin --> UC01
+Admin --> UC03
+Admin --> UC04
+Admin --> UC05
+Admin --> UC06
+Admin --> UC07
+Admin --> UC08
+Admin --> UC09
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+Admin --> UC19
+Admin --> UC20
+
+' Secondary Actor Relations - Therapist
+Therapist --> UC01
+Therapist --> UC03
+Therapist --> UC09
+Therapist --> UC10
+Therapist --> UC11
+
+' External Actor Relations - Patient
+Patient ..> UC08 : "via frontdesk"
+Patient ..> UC11 : "view own data"
+
+' System Automated Relations
+System --> UC15
+System --> UC21
+System --> UC22
+
+' Include Relationships
+UC12 .down.> UC15 : <<include>>
+UC13 .down.> UC15 : <<include>>
+UC14 .down.> UC15 : <<include>>
+UC08 .right.> UC11 : <<include>>
+UC12 .right.> UC11 : <<include>>
+UC16 .up.> UC12 : <<include>>
+UC21 ..> UC08 : <<include>>
+UC22 ..> UC16 : <<include>>
+
+' Extend Relationships
+UC09 .left.> UC10 : <<extend>>
+UC05 .down.> UC08 : <<extend>>
+UC06 .down.> UC08 : <<extend>>
+
+' Generalization
+UC05 -up-|> UC03
+UC06 -up-|> UC03
+UC07 -up-|> UC03
+
+note right of UC15
+  **CRITICAL FIX (Nov 2025)**
+  Auto-sync payment status dari
+  transaction ke visit untuk
+  mencegah inkonsistensi data
+  di Dashboard
+end note
+
+note bottom of System
+  Automated processes run
+  based on settings configuration
+  (whatsappReminder, sendDailySummary)
+end note
+
+@enduml
